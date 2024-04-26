@@ -13,3 +13,16 @@
     @apply w-full bg-orange-500 text-white font-medium rounded-lg text-center hover:bg-orange-400 transition-colors;
   }
 }
+
+/* input[type="number"] 스피너(화살표) 없애는 코드 */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox  */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
