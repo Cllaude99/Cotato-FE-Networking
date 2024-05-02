@@ -20,9 +20,8 @@ import {
 import db from '@/lib/db';
 
 import { z } from 'zod';
-import { getIronSession } from 'iron-session';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import getSession from '@/lib/session';
 
 const checkPassword = ({
   password,
@@ -121,13 +120,9 @@ export async function createAccount(prevState: any, formData: FormData) {
     });
 
     // 사용자 로그인 시켜주는 과정
-    const cookie = await getIronSession(cookies(), {
-      cookieName: 'cotato-fe-networking',
-      password: process.env.COOKIE_PASSWORD!,
-    });
-    //@ts-ignore
-    cookie.id = user.id;
-    await cookie.save();
+    const session = await getSession();
+    session.id = user.id;
+    await session.save();
 
     redirect('/profile');
   }
