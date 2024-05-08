@@ -9,7 +9,7 @@ import {
   PASSWORD_REQUIRED_ERROR,
 } from '@/lib/constants';
 import db from '@/lib/db';
-import getSession, { updateSession } from '@/lib/session';
+import { updateSession } from '@/lib/session';
 import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
 
@@ -72,7 +72,7 @@ export const handleLogin = async (prevState: any, formData: FormData) => {
 
     // 비밀번호가 일치하는 경우
     if (ok) {
-      updateSession(user!.id);
+      await updateSession(user!.id);
 
       redirect('/profile');
     } else {

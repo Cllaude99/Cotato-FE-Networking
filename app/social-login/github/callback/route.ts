@@ -1,6 +1,6 @@
 import db from '@/lib/db';
-import getSession, { updateSession } from '@/lib/session';
-import { notFound, redirect } from 'next/navigation';
+import { updateSession } from '@/lib/session';
+import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
   });
 
   if (user) {
-    updateSession(user.id);
+    await updateSession(user.id);
     return redirect('/profile');
   }
 
@@ -68,6 +68,6 @@ export async function GET(request: NextRequest) {
       id: true,
     },
   });
-  updateSession(newUser.id);
+  await updateSession(newUser.id);
   return redirect('/profile');
 }

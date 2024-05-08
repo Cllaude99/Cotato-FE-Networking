@@ -21,7 +21,7 @@ import db from '@/lib/db';
 
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
-import getSession, { updateSession } from '@/lib/session';
+import { updateSession } from '@/lib/session';
 
 const checkPassword = ({
   password,
@@ -129,7 +129,7 @@ export async function createAccount(prevState: any, formData: FormData) {
     });
 
     // 사용자 로그인 시켜주는 과정 (세션을 이용)
-    updateSession(user.id);
+    await updateSession(user.id);
 
     redirect('/profile');
   }
