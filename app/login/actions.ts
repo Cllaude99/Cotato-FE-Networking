@@ -74,7 +74,7 @@ export const handleLogin = async (prevState: any, formData: FormData) => {
     if (ok) {
       await updateSession(user!.id);
 
-      redirect('/profile');
+      redirect('/networking');
     } else {
       // 비밀번호가 일치하지 않는 경우
       return {
