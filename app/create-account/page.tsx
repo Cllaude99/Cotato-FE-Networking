@@ -6,6 +6,7 @@ import SocialLogin from '@/components/social-login';
 import { useFormState } from 'react-dom';
 import { createAccount } from './actions';
 import { PASSWORD_MIN_LENGTH, USERNAME_MAX_LENGTH } from '@/lib/constants';
+import Link from 'next/link';
 
 export default function CreateAccount() {
   const [state, dispatch] = useFormState(createAccount, null);
@@ -13,8 +14,12 @@ export default function CreateAccount() {
   return (
     <div className="flex flex-col gap-10 py-8 px-6">
       <div className="flex flex-col gap-2 *:font-medium">
-        <h1 className="text-2xl">안녕하세요!</h1>
-        <h2 className="text-xl">Fill in the form below to join!</h2>
+        <h1 className="text-4xl">
+          <Link href={`/`}>Cotato</Link>
+        </h1>
+        <h2 className="text-xl">
+          코테이토 FE 부원이 되기 위해 회원가입을 진행해주세요!
+        </h2>
       </div>
       <form action={dispatch} className="flex flex-col gap-3">
         <Input
