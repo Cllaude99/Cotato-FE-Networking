@@ -131,6 +131,6 @@ export async function createAccount(prevState: any, formData: FormData) {
     // 사용자 로그인 시켜주는 과정 (세션을 이용)
     await updateSession(user.id);
 
-    redirect('/networking');
+    redirect('/profile');
   }
 }

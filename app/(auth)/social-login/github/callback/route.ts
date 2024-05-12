@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
 
   if (user) {
     await updateSession(user.id);
-    return redirect('/networking');
+    return redirect('/profile');
   }
 
   const newUser = await db.user.create({
@@ -69,5 +69,5 @@ export async function GET(request: NextRequest) {
     },
   });
   await updateSession(newUser.id);
-  return redirect('/networking');
+  return redirect('/profile');
 }
