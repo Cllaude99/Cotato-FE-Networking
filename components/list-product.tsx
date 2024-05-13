@@ -20,7 +20,7 @@ export default function ListProducts({
       className="flex gap-5 rounded-md transition-all"
     >
       <div className="relative h-36 w-40 rounded-md overflow-hidden">
-        <Image fill src={photo} alt={title} />
+        <Image fill src={photo} alt={title} className="object-cover" />
       </div>
       <div className="flex flex-col gap-2 *:text-white">
         <span className="text-4xl font-semibold mt-3">{title}</span>
