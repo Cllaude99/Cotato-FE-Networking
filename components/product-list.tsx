@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from 'react';
 import ListProducts from './list-product';
 import getMoreProducts from '@/app/(tabs)/products/actions';
+import Link from 'next/link';
+import { PlusIcon } from '@heroicons/react/24/solid';
 
 interface IProductList {
   initialProducts: {
@@ -47,6 +49,7 @@ export default function ProductList({ initialProducts }: IProductList) {
       observer.observe(trigger.current);
     }
 
+    // 해당 페이지가 언마운트 될때 실행되는 함수
     return () => {
       observer.disconnect();
     };
