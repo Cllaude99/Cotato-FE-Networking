@@ -18,7 +18,7 @@ export default function NavBar() {
       </Link>
       <Link href="/chat" className="flex flex-col items-center gap-px">
         <span className={pathname === '/chat' ? 'text-blue-400' : ''}>
-          채팅
+          질문
         </span>
       </Link>
       <Link href="/live" className="flex flex-col items-center gap-px">
