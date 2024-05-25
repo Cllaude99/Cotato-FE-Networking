@@ -4,12 +4,24 @@ import Input from '@/components/input';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { getUploadUrl, uploadProduct } from './actions';
-import { useFormState } from 'react-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ProductFormType, productSchema } from './schema';
 
 export default function AddProduct() {
   const [thumbNail, setThumbNail] = useState('');
   const [uploadUrl, setUploadUrl] = useState('');
-  const [imageId, setImageId] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    setError,
+  } = useForm<ProductFormType>({
+    resolver: zodResolver(productSchema),
+  });
+
   const onImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { files },
@@ -22,19 +34,20 @@ export default function AddProduct() {
     }
     const url = URL.createObjectURL(file);
     setThumbNail(url);
+    setFile(file);
 
     const { success, result } = await getUploadUrl();
     if (success) {
-      console.log('result', result);
       const { id, uploadURL } = result;
       await setUploadUrl(uploadURL);
-      await setImageId(id);
+      await setValue(
+        'photo',
+        `https://imagedelivery.net/JsWAF1DPVngv4_1a1jAgfw/${id}`
+      );
     }
   };
-  const interceptAction = async (_: any, formData: FormData) => {
+  const interceptAction = handleSubmit(async (data: ProductFormType) => {
     // cloudflare에 이미지를 업로드
-    console.log('intercept start', formData);
-    const file = formData.get('photo');
     if (!file) return;
     const cloudflareForm = new FormData();
     cloudflareForm.append('file', file);
@@ -47,19 +60,25 @@ export default function AddProduct() {
     }
 
     // formData의 photo를 교체
-    const photoUrl = `https://imagedelivery.net/JsWAF1DPVngv4_1a1jAgfw/${imageId}`;
-    await formData.set('photo', photoUrl);
-
-    console.log('intercept done', formData);
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('photo', data.photo);
 
     // uploadProduct함수 호출
-    return uploadProduct(_, formData);
+    const errors = await uploadProduct(formData);
+    if (errors) {
+      // setError("")
+    }
+  });
+
+  const onValid = async () => {
+    await interceptAction();
   };
-  const [state, dispatch] = useFormState(interceptAction, null);
 
   return (
     <div>
-      <form action={dispatch} className="flex flex-col gap-5 p-5">
+      <form action={onValid} className="flex flex-col gap-5 p-5">
         <label
           htmlFor="photo"
           className=" max-h-[300px] border-2 cursor-pointer border-neutral-300 rounded-md aspect-square flex items-center justify-center flex-col text-neutral-300 bg-center bg-cover object-cover"
@@ -70,6 +89,7 @@ export default function AddProduct() {
               <PhotoIcon className="w-20" />
               <div className="text-neutral-400 text-sm">
                 썸네일을 업로드 해주세요
+                {errors.photo?.message}
               </div>
             </>
           )}
@@ -83,14 +103,15 @@ export default function AddProduct() {
           accept="image/*"
         />
         <Input
-          name="title"
           required
           placeholder="제목을 적어주세요"
           type="text"
-          errors={state?.fieldErrors.title}
+          errors={[errors.title?.message ?? '']}
+          {...register('title')}
         />
+        {errors.description?.message}
         <textarea
-          name="description"
+          {...register('description')}
           required
           placeholder="설명을 적어주세요"
           className="resize-none overflow-y-auto h-[300px] bg-transparent rounded-md focus:outline-none ring-2 focus:ring-4 ring-neutral-200 focus:ring-blue-400 border-none placeholder:text-neutral-400 transition"
