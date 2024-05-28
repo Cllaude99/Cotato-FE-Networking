@@ -13,7 +13,7 @@ export default function NavBar() {
       </Link>
       <Link href="/life" className="flex flex-col items-center gap-px">
         <span className={pathname === '/life' ? 'text-blue-400' : ''}>
-          몰라
+          에러해결
         </span>
       </Link>
       <Link href="/chat" className="flex flex-col items-center gap-px">

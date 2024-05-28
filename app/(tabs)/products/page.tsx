@@ -24,7 +24,7 @@ export default async function Product() {
       <ProductList initialProducts={initialProducts} />
       <Link
         href="/products/add"
-        className="bg-blue-500 font-semibold flex items-center justify-center fixed bottom-4 right-4 sm:right-64 text-white transition-colors hover:bg-blue-400 p-2 rounded-md"
+        className="bg-blue-500 font-semibold flex items-center justify-center fixed bottom-4 right-4 sm:right-64 text-white transition-colors hover:bg-blue-400 p-2 rounded-md px-4"
       >
         <span>글 쓰러 가기</span>
       </Link>

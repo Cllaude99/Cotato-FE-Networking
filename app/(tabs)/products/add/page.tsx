@@ -17,7 +17,6 @@ export default function AddProduct() {
     handleSubmit,
     formState: { errors },
     setValue,
-    setError,
   } = useForm<ProductFormType>({
     resolver: zodResolver(productSchema),
   });
