@@ -1,6 +1,7 @@
 import db from '@/lib/db';
 import getSession from '@/lib/session';
 import { UserIcon } from '@heroicons/react/24/solid';
+import { unstable_cache as nextCache } from 'next/cache';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
@@ -23,6 +24,33 @@ async function getProduct(id: number) {
   return product;
 }
 
+async function getProductTitle(id: number) {
+  const product = await db.product.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      title: true,
+    },
+  });
+  return product;
+}
+
+const getCachedProduct = nextCache(getProduct, ['product-detail'], {
+  tags: ['product-detail'],
+});
+
+const getCachedProductTitle = nextCache(getProductTitle, ['product-title'], {
+  tags: ['product-title'],
+});
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const product = await getCachedProductTitle(Number(params.id));
+  return {
+    title: `${product?.title}`,
+  };
+}
+
 // 글의 주인과 로그인한 사용자와 일치하는 지에 대한 여부 확인용 함수
 async function getIsOwner(userId: number) {
   const session = await getSession();
@@ -43,7 +71,7 @@ export default async function ProductDetail({
     return notFound();
   }
   // id값에 해당하는 product를 얻어오는 과정
-  const product = await getProduct(id);
+  const product = await getCachedProduct(id);
   if (!product) {
     return notFound();
   }
@@ -109,4 +137,13 @@ export default async function ProductDetail({
       </div>
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  const products = await db.product.findMany({
+    select: {
+      id: true,
+    },
+  });
+  return products.map((product) => ({ id: product.id + '' }));
 }

@@ -1,6 +1,15 @@
 import ProductList from '@/components/product-list';
 import db from '@/lib/db';
+import { unstable_cache as nextCache } from 'next/cache';
 import Link from 'next/link';
+
+export const metadata = {
+  title: 'Networking',
+};
+
+const getCachedProducts = nextCache(getInitialProducts, ['products'], {
+  revalidate: 60,
+});
 
 async function getInitialProducts() {
   const products = await db.product.findMany({
@@ -17,8 +26,11 @@ async function getInitialProducts() {
   });
   return products;
 }
-export default async function Product() {
-  const initialProducts = await getInitialProducts();
+
+export const dynamic = 'force-dynamic';
+
+export default async function Products() {
+  const initialProducts = await getCachedProducts();
   return (
     <div>
       <ProductList initialProducts={initialProducts} />
