@@ -1,7 +1,11 @@
 import db from '@/lib/db';
 import getSession from '@/lib/session';
 import { UserIcon } from '@heroicons/react/24/solid';
-import { unstable_cache as nextCache } from 'next/cache';
+import {
+  unstable_cache as nextCache,
+  revalidatePath,
+  revalidateTag,
+} from 'next/cache';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
@@ -41,7 +45,7 @@ const getCachedProduct = nextCache(getProduct, ['product-detail'], {
 });
 
 const getCachedProductTitle = nextCache(getProductTitle, ['product-title'], {
-  tags: ['product-title'],
+  tags: ['product-title', 'product-detail'],
 });
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -85,6 +89,8 @@ export default async function ProductDetail({
         id,
       },
     });
+    revalidateTag('product-detail');
+    revalidatePath('/products');
     redirect('/products');
   }
 
@@ -121,11 +127,19 @@ export default async function ProductDetail({
       </div>
       <div className="fixed w-full max-w-screen-lg mx-auto bottom-0  p-2.5 bg-neutral-800 flex justify-end items-center gap-3 rounded-md">
         {isOwner ? (
-          <form action={DeleteProduct}>
-            <button className="bg-red-500 px-5 py-2.5 rounded-md text-white font-semibold">
-              글 삭제하기
-            </button>
-          </form>
+          <>
+            <Link
+              href={`/products/${id}/edit`}
+              className="bg-blue-500 px-5 py-2.5 rounded-md text-white font-semibold"
+            >
+              글 수정하기
+            </Link>
+            <form action={DeleteProduct}>
+              <button className="bg-red-500 px-5 py-2.5 rounded-md text-white font-semibold">
+                글 삭제하기
+              </button>
+            </form>
+          </>
         ) : (
           <Link
             href={``}

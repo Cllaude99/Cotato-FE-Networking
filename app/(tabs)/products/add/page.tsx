@@ -77,10 +77,10 @@ export default function AddProduct() {
 
   return (
     <div>
-      <form action={onValid} className="flex flex-col gap-5 p-5">
+      <form action={onValid} className="flex flex-col gap-5">
         <label
           htmlFor="photo"
-          className=" max-h-[300px] border-2 cursor-pointer border-neutral-300 rounded-md aspect-square flex items-center justify-center flex-col text-neutral-300 bg-center bg-cover object-cover"
+          className=" h-96 border-2 cursor-pointer border-neutral-300 rounded-md aspect-square flex items-center justify-center flex-col text-neutral-300 bg-center bg-cover object-cover"
           style={{ backgroundImage: `url(${thumbNail})` }}
         >
           {!thumbNail && (
