@@ -52,3 +52,14 @@ export const createComment = async (
   revalidateTag(`comments-${postId}`);
   revalidateTag('posts');
 };
+
+export const deleteComment = async (commentId: number, postId: number) => {
+  await db.comment.delete({
+    where: {
+      id: commentId,
+    },
+  });
+
+  revalidateTag(`comments-${postId}`);
+  revalidateTag('posts');
+};

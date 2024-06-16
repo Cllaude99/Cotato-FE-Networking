@@ -106,6 +106,7 @@ const getComments = async (postId: number) => {
       id: true,
       user: {
         select: {
+          id: true,
           avatar: true,
           username: true,
         },

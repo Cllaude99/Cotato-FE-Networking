@@ -27,7 +27,7 @@ const CommentForm = ({ handleSubmit }: ICommentFormProps) => {
         name="payload"
         placeholder="댓글을 입력해주세요."
         autoComplete="off"
-        className="text-white placeholder:text-white bg-neutral-600 outline-none border-none rounded-md w-72"
+        className="text-white placeholder:text-white bg-neutral-600 outline-none border-none rounded-md w-72 ring-blue-400 ring-0 focus:ring-4"
       />
       <button className="py-2 px-3 bg-blue-500 rounded-md cursor-pointer">
         작성하기
