@@ -6,6 +6,7 @@ import { HandThumbUpIcon as OutlineHandThumbUpIcon } from '@heroicons/react/24/o
 import { unstable_cache as nextCache, revalidateTag } from 'next/cache';
 import LikeButton from '@/components/like-button';
 import { notFound } from 'next/navigation';
+import CommentList from '@/components/comment-list';
 
 async function getPost(id: number) {
   try {
@@ -73,6 +74,57 @@ async function getCachedLikeStatus(postId: number) {
   return cachedOperation(postId, userId!);
 }
 
+const getUser = async (userId: number) => {
+  const user = await db.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      id: true,
+      username: true,
+      avatar: true,
+    },
+  });
+  return user;
+};
+
+const getCachedUser = (userId: number) => {
+  const cachedOperation = nextCache(getUser, [`user-info-${userId}`], {
+    tags: [`user-info-${userId}`],
+  });
+  return cachedOperation(userId);
+};
+
+const getComments = async (postId: number) => {
+  const comments = await db.comment.findMany({
+    where: {
+      postId,
+    },
+    select: {
+      payload: true,
+      created_at: true,
+      id: true,
+      user: {
+        select: {
+          avatar: true,
+          username: true,
+        },
+      },
+    },
+    orderBy: {
+      created_at: 'desc',
+    },
+  });
+  return comments;
+};
+
+const getCachedComments = (postId: number) => {
+  const cachedOperation = nextCache(getComments, [`post-comment-${postId}`], {
+    tags: [`comments-${postId}`],
+  });
+  return cachedOperation(postId);
+};
+
 export default async function PostDetail({
   params,
 }: {
@@ -83,9 +135,12 @@ export default async function PostDetail({
     return notFound();
   }
   const post = await getCachedPost(id);
+  const session = await getSession();
   if (!post) {
     return notFound();
   }
+  const comments = await getCachedComments(id);
+  const user = await getCachedUser(session.id!);
 
   const { likeCount, isLiked } = await getCachedLikeStatus(id);
   return (
@@ -100,12 +155,13 @@ export default async function PostDetail({
       </div>
       <h2 className="text-lg font-semibold">{post.title}</h2>
       <p className="mb-5">{post.description}</p>
-      <div className="flex flex-col gap-5 items-start">
+      <div className="flex flex-col gap-5 items-start mb-10">
         <div className="flex items-center gap-2 text-neutral-400 text-sm">
           <EyeIcon className="size-5" />
           <span>조회 {post.views}</span>
           <LikeButton isLiked={isLiked} likeCount={likeCount} postId={id} />
         </div>
+        <CommentList postId={id} commentsData={comments} user={user!} />
       </div>
     </div>
   );

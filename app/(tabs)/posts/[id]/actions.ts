@@ -15,6 +15,7 @@ export async function likePost(postId: number) {
       },
     });
     revalidateTag(`like-status-${postId}`);
+    revalidateTag('posts');
   } catch (e) {}
 }
 
@@ -31,5 +32,23 @@ export async function dislikePost(postId: number) {
       },
     });
     revalidateTag(`like-status-${postId}`);
+    revalidateTag('posts');
   } catch (e) {}
 }
+
+export const createComment = async (
+  postId: number,
+  payload: string,
+  userId: number
+) => {
+  await db.comment.create({
+    data: {
+      payload,
+      userId,
+      postId,
+    },
+  });
+
+  revalidateTag(`comments-${postId}`);
+  revalidateTag('posts');
+};
