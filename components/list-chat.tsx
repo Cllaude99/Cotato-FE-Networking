@@ -62,7 +62,7 @@ export default function ListChat({
         )}
       </div>
       {message && !message.isRead && message.userId !== userId && (
-        <div className="size-2 rounded-full bg-white ml-auto" />
+        <div className="size-2 rounded-full bg-blue-500 ml-auto" />
       )}
     </Link>
   );
