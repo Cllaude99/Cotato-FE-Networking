@@ -3,6 +3,7 @@ import db from '@/lib/db';
 import getSession from '@/lib/session';
 import { Prisma } from '@prisma/client';
 import { notFound } from 'next/navigation';
+import { unstable_cache as nextCache, revalidateTag } from 'next/cache';
 
 async function getRoom(id: string) {
   const room = await db.chatRoom.findUnique({
@@ -22,7 +23,6 @@ async function getRoom(id: string) {
       return null;
     }
   }
-
   return room;
 }
 
@@ -36,6 +36,7 @@ async function getMessages(chatRoomId: string) {
       payload: true,
       created_at: true,
       userId: true,
+      isRead: true,
       user: {
         select: {
           avatar: true,
@@ -47,7 +48,7 @@ async function getMessages(chatRoomId: string) {
   return messages;
 }
 
-async function getUserProfile() {
+async function getUserProfile(userId: number) {
   const session = await getSession();
   const user = await db.user.findUnique({
     where: {
@@ -61,6 +62,17 @@ async function getUserProfile() {
   return user;
 }
 
+function getCachedUserProfile(userId: number) {
+  const cachedOperation = nextCache(
+    getUserProfile,
+    [`user-profile-${userId}`],
+    {
+      tags: [`user-profile-${userId}`],
+    }
+  );
+  return cachedOperation(userId);
+}
+
 export type InitialChatMessages = Prisma.PromiseReturnType<typeof getMessages>;
 
 export default async function ChatRoom({ params }: { params: { id: string } }) {
@@ -70,7 +82,27 @@ export default async function ChatRoom({ params }: { params: { id: string } }) {
   }
   const initialMessages = await getMessages(params.id);
   const session = await getSession();
-  const user = await getUserProfile();
+  const readMessage = async (messageId: number) => {
+    'use server';
+    await db.message.update({
+      where: {
+        id: messageId,
+      },
+      data: {
+        isRead: true,
+      },
+    });
+    revalidateTag(`chat-list`);
+  };
+
+  if (
+    initialMessages.length > 0 &&
+    initialMessages[initialMessages.length - 1].userId !== session.id! &&
+    !initialMessages[initialMessages.length - 1].isRead
+  ) {
+    readMessage(initialMessages[initialMessages.length - 1].id);
+  }
+  const user = await getUserProfile(session.id!);
   if (!user) {
     return notFound();
   }
@@ -82,6 +114,7 @@ export default async function ChatRoom({ params }: { params: { id: string } }) {
       userId={session.id!}
       username={user.username}
       avatar={user.avatar}
+      readMessage={readMessage}
     />
   );
 }

@@ -1,10 +1,11 @@
 'use client';
 
+import { saveMessage } from '@/app/question/[id]/actions';
 import { InitialChatMessages } from '@/app/question/[id]/page';
-import { saveMessage } from '@/app/question/actions';
 import { formatToTimeAgo } from '@/lib/utils';
 import { ArrowUpCircleIcon } from '@heroicons/react/24/solid';
 import { RealtimeChannel, createClient } from '@supabase/supabase-js';
+import { revalidateTag } from 'next/cache';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
@@ -18,6 +19,7 @@ interface IChatMessageListProps {
   chatRoomId: string;
   username: string;
   avatar: string | null;
+  readMessage: (messageId: number) => void;
 }
 export default function ChatMessagesList({
   initialMessages,
@@ -25,6 +27,7 @@ export default function ChatMessagesList({
   chatRoomId,
   username,
   avatar,
+  readMessage,
 }: IChatMessageListProps) {
   const [messages, setMessages] = useState(initialMessages);
   const [message, setMessage] = useState('');
@@ -44,6 +47,7 @@ export default function ChatMessagesList({
         payload: message,
         created_at: new Date(),
         userId,
+        isRead: false,
         user: {
           username: '',
           avatar: '',
@@ -58,6 +62,7 @@ export default function ChatMessagesList({
         created_at: new Date(),
         payload: message,
         userId,
+        isRead: false,
         user: {
           username,
           avatar,
@@ -73,15 +78,16 @@ export default function ChatMessagesList({
     const client = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
     channel.current = client.channel(`room-${chatRoomId}`);
     channel.current
-      .on('broadcast', { event: 'message' }, (payload) =>
-        setMessages((prevMsg) => [...prevMsg, payload.payload])
-      )
+      .on('broadcast', { event: 'message' }, (payload) => {
+        readMessage(messages[messages.length - 1].id);
+        setMessages((prevMsg) => [...prevMsg, payload.payload]);
+      })
       .subscribe();
 
     return () => {
       channel.current?.unsubscribe();
     };
-  }, [chatRoomId]);
+  }, [chatRoomId, messages, readMessage]);
 
   return (
     <div className="p-5 flex flex-col gap-5 min-h-screen justify-end">
@@ -116,7 +122,7 @@ export default function ChatMessagesList({
           >
             <span
               className={`${
-                message.userId === userId ? 'bg-neutral-500' : 'bg-blue-500'
+                message.userId === userId ? 'bg-blue-500' : 'bg-neutral-500'
               } p-2.5 rounded-md`}
             >
               {message.payload}
@@ -136,6 +142,7 @@ export default function ChatMessagesList({
           type="text"
           name="message"
           placeholder="메세지를 작성해주세요!"
+          autoComplete="off"
         />
         <button className="absolute right-0">
           <ArrowUpCircleIcon className="size-10 text-blue-500 transition-colors hover:text-blue-300" />

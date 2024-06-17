@@ -11,8 +11,8 @@ export default function NavBar() {
           과제
         </span>
       </Link>
-      <Link href="/question" className="flex flex-col items-center gap-px">
-        <span className={pathname === '/question' ? 'text-blue-400' : ''}>
+      <Link href="/questions" className="flex flex-col items-center gap-px">
+        <span className={pathname === '/questions' ? 'text-blue-400' : ''}>
           질문방
         </span>
       </Link>

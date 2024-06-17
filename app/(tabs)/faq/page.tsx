@@ -26,7 +26,7 @@ async function getPosts() {
   return posts;
 }
 
-export default async function Life() {
+export default async function Faq() {
   const posts = await getPosts();
 
   return (

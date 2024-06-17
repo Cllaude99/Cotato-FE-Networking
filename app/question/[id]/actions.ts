@@ -2,6 +2,7 @@
 
 import db from '@/lib/db';
 import getSession from '@/lib/session';
+import { revalidateTag } from 'next/cache';
 
 export async function saveMessage(payload: string, chatRoomId: string) {
   const session = await getSession();
@@ -13,4 +14,5 @@ export async function saveMessage(payload: string, chatRoomId: string) {
     },
     select: { id: true },
   });
+  revalidateTag('chat-list');
 }
