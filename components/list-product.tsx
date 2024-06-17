@@ -28,8 +28,8 @@ export default function ListProducts({
         />
       </div>
       <div className="flex flex-col gap-2 *:text-white">
-        <span className="text-4xl font-semibold mt-3">{title}</span>
-        <span className="text-lg text-neutral-500">
+        <span className="text-3xl font-semibold mt-3">{title}</span>
+        <span className="text-base text-neutral-500">
           {formatToTimeAgo(created_at.toString())}
         </span>
       </div>

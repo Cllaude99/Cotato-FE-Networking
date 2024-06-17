@@ -2,7 +2,6 @@ import db from '@/lib/db';
 import getSession from '@/lib/session';
 import { formatToTimeAgo } from '@/lib/utils';
 import { EyeIcon, HandThumbUpIcon } from '@heroicons/react/24/solid';
-import { HandThumbUpIcon as OutlineHandThumbUpIcon } from '@heroicons/react/24/outline';
 import { unstable_cache as nextCache, revalidateTag } from 'next/cache';
 import LikeButton from '@/components/like-button';
 import { notFound } from 'next/navigation';
