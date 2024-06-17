@@ -114,7 +114,7 @@ export default async function ProductDetail({
         id: true,
       },
     });
-    redirect(`/chats/${room.id}`);
+    redirect(`/question/${room.id}`);
   };
   return (
     <div>
