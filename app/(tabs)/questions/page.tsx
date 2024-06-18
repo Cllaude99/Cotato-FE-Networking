@@ -46,6 +46,7 @@ export default async function Question() {
 
   return (
     <div>
+      <h1 className="text-xl">질문방 개수 ({chats.length})</h1>
       {chats.map((chat, idx) => (
         <ListChat
           id={chat.id}

@@ -90,7 +90,7 @@ export default function ChatMessagesList({
   }, [chatRoomId, messages, readMessage]);
 
   return (
-    <div className="p-5 flex flex-col gap-5 min-h-screen justify-end">
+    <div className="p-5 flex flex-col gap-5 min-h-screen justify-start w-[80%] mx-auto mt-8">
       {messages.map((message) => (
         <div
           key={message.id}
@@ -133,7 +133,7 @@ export default function ChatMessagesList({
           </div>
         </div>
       ))}
-      <form className="flex relative" onSubmit={onSubmit}>
+      <form className="flex relative mt-5" onSubmit={onSubmit}>
         <input
           required
           onChange={onChange}

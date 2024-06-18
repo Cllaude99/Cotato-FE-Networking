@@ -29,9 +29,10 @@ export default async function Profile() {
 
   return (
     <div>
-      <h1>welcome {user?.username}</h1>
+      <h1>{user?.username}님 안녕하세요!</h1>
+      <h2>페이지를 준비중입니다...</h2>
       <form action={logOut}>
-        <button>Log out</button>
+        &rarr; <button>Log out</button>
       </form>
     </div>
   );
