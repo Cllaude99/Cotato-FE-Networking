@@ -4,7 +4,7 @@ import { unstable_cache as nextCache } from 'next/cache';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Networking',
+  title: 'Colog',
 };
 
 const getCachedProducts = nextCache(getInitialProducts, ['products'], {
