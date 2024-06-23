@@ -53,15 +53,15 @@ export default function First() {
               <p>1. 위와 같이 동작하는 계산기를 만들어 주세요!</p>
               <p>
                 2. type이 number인{' '}
-                <span className="text-red-400">input 태그</span>를 사용해
+                <span className="text-blue-400">input 태그</span>를 사용해
                 입력값을 받도록 해주세요.
               </p>
               <p>
-                3. <span className="text-red-400">select태그, option태그</span>{' '}
+                3. <span className="text-blue-400">select태그, option태그</span>{' '}
                 으로 산술연산자를 고를 수 있도록 해주세요.
               </p>
               <p>
-                4. <span className="text-red-400">Calculate 버튼</span>을
+                4. <span className="text-blue-400">Calculate 버튼</span>을
                 클릭하면, 결과가 나오도록 구현해 주세요.
               </p>
             </div>
@@ -86,13 +86,13 @@ export default function First() {
             <div className="bg-neutral-800 w-full h-max rounded-md p-5 flex flex-col gap-5 text-lg">
               <p>
                 1. vscode의 왼쪽 extenstion(확장) 탭으로 들어가{' '}
-                <span className="text-red-400">Live server</span> 를 검색 후
+                <span className="text-blue-400">Live server</span> 를 검색 후
                 설치해주세요.{' '}
               </p>
               <p>
                 2. 그 후 vscode의 템플릿 코드가 있는 곳 (index.html) 에서 마우스
                 우클릭 →{' '}
-                <span className="text-red-400">Open with Liver Server </span>{' '}
+                <span className="text-blue-400">Open with Liver Server </span>{' '}
                 클릭을 하면 화면으로 확인 할 수 있습니다.
               </p>
               <p>
@@ -100,7 +100,7 @@ export default function First() {
                 따라서 상태를 저장하고 싶다면 아래와 같은 코드를 사용해야
                 합니다!
                 <br />
-                <span className="text-red-400">{`👉🏻 const [a, setA] = React.useState();`}</span>
+                <span className="text-blue-400">{`👉🏻 const [a, setA] = React.useState();`}</span>
               </p>
               <p>
                 4. &nbsp;
@@ -109,7 +109,7 @@ export default function First() {
                   target="_blank"
                   className="text-white cursor-pointer text-lg hover:text-blue-400 transition-colors"
                 >
-                  <span className="text-red-400">input태그</span> 참고하러 가기
+                  <span className="text-blue-400">input태그</span> 참고하러 가기
                   (클릭)
                 </a>
               </p>
@@ -120,8 +120,8 @@ export default function First() {
                   target="_blank"
                   className="text-white cursor-pointer text-lg hover:text-blue-400 transition-colors"
                 >
-                  <span className="text-red-400">select태그</span> 참고하러 가기
-                  (클릭)
+                  <span className="text-blue-400">select태그</span> 참고하러
+                  가기 (클릭)
                 </a>
               </p>
               <p>
@@ -131,7 +131,7 @@ export default function First() {
                   target="_blank"
                   className="text-white cursor-pointer text-lg hover:text-blue-400 transition-colors"
                 >
-                  <span className="text-red-400">onClick 이벤트</span> 참고하러
+                  <span className="text-blue-400">onClick 이벤트</span> 참고하러
                   가기 (클릭)
                 </a>
               </p>
@@ -142,8 +142,8 @@ export default function First() {
                   target="_blank"
                   className="text-white cursor-pointer text-lg hover:text-blue-400 transition-colors"
                 >
-                  <span className="text-red-400">onChange 이벤트</span> 참고하러
-                  가기 (클릭)
+                  <span className="text-blue-400">onChange 이벤트</span>{' '}
+                  참고하러 가기 (클릭)
                 </a>
               </p>
               <p>
