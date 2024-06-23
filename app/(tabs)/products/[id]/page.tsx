@@ -9,6 +9,10 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import '@/app/markdown.css';
 
 // 입력으로 주어진 id값을 바탕으로 product를 찾아 반환하는 함수
 async function getProduct(id: number) {
@@ -116,6 +120,7 @@ export default async function ProductDetail({
     });
     redirect(`/question/${room.id}`);
   };
+
   return (
     <div>
       <div className="relative aspect-square w-full h-96 bg-auto bg-center mx-auto object-cover">
@@ -144,10 +149,19 @@ export default async function ProductDetail({
         </div>
       </div>
       <div className="p-5">
-        <h1 className="text-2xl font-semibold">{product.title}</h1>
-        <p>{product.description}</p>
+        <h1 className="text-4xl font-semibold mb-4 bg-blue-400 p-2 rounded-md">
+          {product.title}
+        </h1>
+        <div className="prose prose-white">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw]}
+          >
+            {product.description}
+          </ReactMarkdown>
+        </div>
       </div>
-      <div className="fixed w-full max-w-screen-lg mx-auto bottom-0  p-2.5 bg-neutral-800 flex justify-end items-center gap-3 rounded-md">
+      <div className="fixed w-full max-w-screen-lg mx-auto bottom-0  p-2.5 bg-transparent flex justify-end items-center gap-3 rounded-md">
         {isOwner ? (
           <>
             <Link
