@@ -5,7 +5,7 @@ export default function Networking() {
   return (
     <div className="grid gap-3 gap-y-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <Link href={`/networking/first`}>
-        <div className=" w-full h-56 hover:scale-105 cursor-pointer flex flex-col opacity-70 hover:opacity-100 transition-all">
+        <div className=" w-full h-56 hover:scale-110 cursor-pointer flex flex-col opacity-70 hover:opacity-100 transition-all">
           <h1 className="text-black bg-white text-center h-[180px] flex justify-center items-center text-7xl font-semibold rounded-md">
             Week1
           </h1>
