@@ -12,13 +12,13 @@ export default function CreateAccount() {
   const [state, dispatch] = useFormState(createAccount, null);
 
   return (
-    <div className="flex flex-col justify-center min-h-screen">
+    <div className="flex flex-col justify-center min-h-screen md:w-4/5 md:mx-auto">
       <div className="flex flex-col gap-10 py-8 px-9 -mt-36 ">
         <div className="flex flex-col gap-2 *:font-medium">
           <h1 className="text-6xl">
             <Link href={`/`}>Cotato</Link>
           </h1>
-          <h2 className="text-xl">
+          <h2 className="text-md md:text-xl">
             코테이토 FE 부원이 되기 위해 회원가입을 진행해주세요!
           </h2>
         </div>

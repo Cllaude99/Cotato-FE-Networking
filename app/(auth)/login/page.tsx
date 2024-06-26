@@ -12,7 +12,7 @@ export default function Login() {
   const [state, formAction] = useFormState(handleLogin, null);
 
   return (
-    <div className="flex flex-col justify-center min-h-screen">
+    <div className="flex flex-col justify-center min-h-screen md:w-4/5 md:mx-auto">
       <div className="flex flex-col gap-10 py-8 px-9 -mt-36">
         <div className="flex flex-col gap-2 *:font-medium">
           <h1 className="text-6xl">
