@@ -15,6 +15,7 @@ export async function likePost(postId: number) {
     });
     revalidateTag(`like-status-${postId}`);
     revalidateTag('posts');
+    revalidateTag(`faqs`);
   } catch (e) {}
 }
 
@@ -31,6 +32,7 @@ export async function dislikePost(postId: number) {
     });
     revalidateTag(`like-status-${postId}`);
     revalidateTag('posts');
+    revalidateTag(`faqs`);
   } catch (e) {}
 }
 
@@ -49,6 +51,7 @@ export const createComment = async (
 
   revalidateTag(`comments-${postId}`);
   revalidateTag('posts');
+  revalidateTag(`faqs`);
 };
 
 export const deleteComment = async (commentId: number, postId: number) => {
@@ -60,4 +63,5 @@ export const deleteComment = async (commentId: number, postId: number) => {
 
   revalidateTag(`comments-${postId}`);
   revalidateTag('posts');
+  revalidateTag(`faqs`);
 };

@@ -137,7 +137,7 @@ export default function Second() {
           <div className="mx-auto sm:w-[500px] md:w-[650px] lg:w-[700px] mt-9">
             <iframe
               height="430"
-              src="https://www.youtube.com/embed/VYwBmZhBJS0?si=ndCbtBaWEalK7fVM"
+              src="https://www.youtube.com/embed/qz6xvMog2EY?si=iFfZlZxUSauRHLU-"
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               className="w-full"
