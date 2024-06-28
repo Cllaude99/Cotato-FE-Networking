@@ -30,7 +30,9 @@ https://github.com/Cllaude99/Cotato-FE-Networking/assets/96279437/f2364763-3e12-
 > Colog 글 목록중 질문하고 싶은 목록에 들어가 글 작성자에게 질문할 수 있습니다. <br />
 > 질문을 하게 되는 경우 1대1로 소통하는 방이 만들어 집니다.
 
-https://github.com/Cllaude99/Cotato-FE-Networking/assets/96279437/ae684e74-0bdf-41c2-af81-571f29f2b007
+
+https://github.com/Cllaude99/Cotato-FE-Networking/assets/96279437/dd4a07b0-928b-40eb-bbca-68c4a6cc785b
+
 
 
 ### FAQ 페이지
