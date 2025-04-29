@@ -2,7 +2,6 @@
 
 ## Cotato-FE-Networking
 
-## 👉🏻 [구경하러 가기](https://cotato-fe-networking-kimtaeyoons-projects.vercel.app/)
 
 ### 프로젝트 소개
 > IT동아리 코테이토의 프런트엔드 파트장으로서 프런트-네트워킹을 진행하였습니다.
